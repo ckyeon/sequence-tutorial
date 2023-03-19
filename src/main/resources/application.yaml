@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: sequence-tutorial
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: "jdbc:h2:mem:sequence_tutorial;MODE=MYSQL;DB_CLOSE_DELAY=-1"
+    username: sequence
+    password:
+
+server:
+  port: 8080
