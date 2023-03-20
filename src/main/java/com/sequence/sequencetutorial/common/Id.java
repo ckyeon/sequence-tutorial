@@ -18,7 +18,7 @@ public class Id<R, V> {
 
   public static <R, V> Id<R, V> of(Class<R> reference, V value) {
     checkArgument(reference != null, "reference must be provided.");
-    checkArgument(value != null, "reference must be provided.");
+    checkArgument(value != null, "value must be provided.");
 
     return new Id<>(reference, value);
   }
