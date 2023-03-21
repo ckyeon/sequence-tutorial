@@ -1,5 +1,7 @@
 package com.sequence.sequencetutorial.todo.application;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import com.sequence.sequencetutorial.common.Id;
 import com.sequence.sequencetutorial.todo.domain.Todo;
 import com.sequence.sequencetutorial.todo.domain.repository.TodoRepository;
@@ -20,6 +22,8 @@ public class TodoService {
 
   @Transactional
   public void create(CreateDto dto) {
+    checkArgument(dto != null, "create dto must be provided.");
+
     Todo todo = dto.toEntity();
     todoRepository.save(todo);
   }
@@ -31,6 +35,9 @@ public class TodoService {
 
   @Transactional
   public void update(Id<Todo, Long> id, UpdateDto dto) {
+    checkArgument(id != null, "id must be provided.");
+    checkArgument(dto != null, "update dto must be provided.");
+
     Long todoId = id.value();
     Todo todo = todoRepository.findById(todoId)
       .orElseThrow(() -> new RuntimeException("NotFoundTodo"));
@@ -41,6 +48,8 @@ public class TodoService {
 
   @Transactional
   public void delete(Id<Todo, Long> id) {
+    checkArgument(id != null, "id must be provided.");
+
     Long todoId = id.value();
     todoRepository.deleteById(todoId);
   }
