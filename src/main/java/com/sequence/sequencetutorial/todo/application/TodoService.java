@@ -6,6 +6,7 @@ import com.sequence.sequencetutorial.common.Id;
 import com.sequence.sequencetutorial.todo.domain.Todo;
 import com.sequence.sequencetutorial.todo.domain.repository.TodoRepository;
 import com.sequence.sequencetutorial.todo.presentation.dto.CreateDto;
+import com.sequence.sequencetutorial.todo.presentation.dto.TodoResponse;
 import com.sequence.sequencetutorial.todo.presentation.dto.UpdateDto;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,11 @@ public class TodoService {
   }
 
   @Transactional(readOnly = true)
-  public List<Todo> findAll() {
-    return todoRepository.findAll();
+  public List<TodoResponse> findAll() {
+    return todoRepository.findAll()
+      .stream()
+      .map(TodoResponse::fromEntity)
+      .toList();
   }
 
   @Transactional
@@ -39,11 +43,21 @@ public class TodoService {
     checkArgument(dto != null, "update dto must be provided.");
 
     Long todoId = id.value();
-    Todo todo = todoRepository.findById(todoId)
-      .orElseThrow(() -> new RuntimeException("NotFoundTodo"));
-
-    Todo updateTodo = dto.toEntity();
-    todo.update(updateTodo);
+    todoRepository.findById(todoId)
+      .ifPresentOrElse(
+        (todo) -> {
+          Todo updateTodo = dto.toEntity();
+          todo.update(updateTodo);
+        },
+        () -> {
+          CreateDto createDto = new CreateDto(
+            dto.getTitle(),
+            dto.getBody(),
+            dto.isDone()
+          );
+          create(createDto);
+        }
+      );
   }
 
   @Transactional

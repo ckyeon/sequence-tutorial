@@ -21,6 +21,18 @@ public class UpdateDto {
     return new Todo(title, body, done);
   }
 
+  public String getTitle() {
+    return title;
+  }
+
+  public String getBody() {
+    return body;
+  }
+
+  public boolean isDone() {
+    return done;
+  }
+
   @Override
   public String toString() {
     return new ToStringBuilder(this)

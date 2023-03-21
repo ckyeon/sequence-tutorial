@@ -4,6 +4,7 @@ import com.sequence.sequencetutorial.common.Id;
 import com.sequence.sequencetutorial.todo.application.TodoService;
 import com.sequence.sequencetutorial.todo.domain.Todo;
 import com.sequence.sequencetutorial.todo.presentation.dto.CreateDto;
+import com.sequence.sequencetutorial.todo.presentation.dto.TodoResponse;
 import com.sequence.sequencetutorial.todo.presentation.dto.UpdateDto;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,8 @@ public class TodoController {
   }
 
   @GetMapping("/todo")
-  public ResponseEntity<List<Todo>> findAll() {
-    List<Todo> findTodos = todoService.findAll();
+  public ResponseEntity<List<TodoResponse>> findAll() {
+    List<TodoResponse> findTodos = todoService.findAll();
     return ResponseEntity.ok(findTodos);
   }
 
