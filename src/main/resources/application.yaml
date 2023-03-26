@@ -9,7 +9,7 @@ spring:
 
   datasource:
     driver-class-name: org.h2.Driver
-    url: "jdbc:h2:mem:sequence_tutorial;MODE=MYSQL;DB_CLOSE_DELAY=-1"
+    url: "jdbc:h2:mem:sequence_tutorial;MODE=MYSQL;DB_CLOSE_DELAY=-1;NON_KEYWORDS=USER"
     username: sequence
     password:
 
@@ -26,3 +26,9 @@ spring:
 
 server:
   port: 8080
+
+jwt:
+  header: Authorization
+  issuer: sequence
+  clientSecret: FJEIOWFJKLjFl3r4109fue0
+  expirySeconds: 10000

@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/todos")
 public class TodoController {
 
   private final TodoService todoService;
@@ -25,26 +27,26 @@ public class TodoController {
     this.todoService = todoService;
   }
 
-  @PostMapping("/todo")
+  @PostMapping
   public ResponseEntity<Void> create(@RequestBody CreateDto dto) {
     todoService.create(dto);
     return ResponseEntity.ok(null);
   }
 
-  @GetMapping("/todo")
+  @GetMapping
   public ResponseEntity<List<TodoResponse>> findAll() {
     List<TodoResponse> findTodos = todoService.findAll();
     return ResponseEntity.ok(findTodos);
   }
 
-  @PutMapping("/todo/{id}")
+  @PutMapping("/{id}")
   public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody UpdateDto dto) {
     Id<Todo, Long> todoId = Id.of(Todo.class, id);
     todoService.update(todoId, dto);
     return ResponseEntity.ok(null);
   }
 
-  @DeleteMapping("/todo/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) {
     Id<Todo, Long> todoId = Id.of(Todo.class, id);
     todoService.delete(todoId);
