@@ -45,6 +45,7 @@ public class SecurityConfig {
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     http.authorizeHttpRequests()
+      .requestMatchers("/todos/**").hasRole(Role.ROLE_USER.name())
       .requestMatchers("/users/**").hasRole(Role.ROLE_USER.name())
       .requestMatchers("/auth/**").permitAll()
       .anyRequest().permitAll();
